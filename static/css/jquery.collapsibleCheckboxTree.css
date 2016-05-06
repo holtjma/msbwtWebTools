@@ -1,0 +1,28 @@
+#mainList ul {
+	padding-left:20px;
+}
+#mainList li {
+	list-style:none;
+	font-size: 18px;
+	font-weight: bold;
+}
+#mainList ul.hide {
+	display:none;
+}
+#mainList span {
+	color:#999;
+	font-family:"Courier New", Courier, monospace;
+	cursor:default;
+}
+#mainList span.expanded, #mainList span.collapsed {
+	cursor:pointer;
+}
+
+.datatable {
+	width: 100%;
+	table-layout: auto;
+}
+
+.datatable td {
+	text-align: left;
+}

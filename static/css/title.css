@@ -1,0 +1,45 @@
+h1 {
+    color: #000000;
+}
+
+body {
+    margin: 10px;
+    background-color: #cccccc;
+}
+
+.main {
+    background-color: #ffffff;
+    border-spacing: 3px;
+    padding: 3px;
+    width: 90%;
+    margin: auto;
+}
+
+.toplinks {
+    /*Carolina Blue*/
+    background-color: #7BAFD4;
+}
+
+.toplinks .flanks {
+    
+}
+
+.toplinks .internal {
+    border: 1px solid black;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin: 5px;
+    height: 40px;
+}
+
+.toplinks .internal a {
+    color: #0000FF;
+    text-decoration: none;
+}
+
+.toplinks .internal a:hover{
+    color: #ffffff;
+}
