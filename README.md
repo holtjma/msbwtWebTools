@@ -25,7 +25,7 @@ following command to start the web server:
 
     python application.py
 
-Finally, open up a web browser and navigate to [127.0.0.1:5000](https://127.0.0.1:5000) (default for *Flask*) to access the example datasets.
+Finally, open up a web browser and navigate to [127.0.0.1:5000](http://127.0.0.1:5000) (default for *Flask*) to access the example datasets.
 
 ## Customizing the BWTs
 These web tools expect BWTs to be in the [Run-Length Encoded (RLE) format](https://github.com/holtjma/msbwt/wiki/Converting-to-msbwt's-RLE-format)
