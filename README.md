@@ -52,3 +52,5 @@ All test BWTs provided have this meta file for example purposes.  Inside the fil
  * Number of Reads - the total number of reads the BWT holds (default: Not available)
  * Publication - any publication information associated with the dataset; if multiple datasets use the same publication, these entries must be identical for the website to layout correctly (default: Not available)
 
+## References
+Holt, James Matthew. *Using the multi-string Burrows Wheeler Transform for high-throughput sequence analysis.* Diss. The University of North Carolina at Chapel Hill, 2016.
