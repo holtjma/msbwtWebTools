@@ -67,7 +67,7 @@ def GET():
     panel.add("<script src='./static/js/jquery-2.1.1.min.js'></script>")
     panel.add("<script src='http://d3js.org/d3.v3.min.js'></script>")
     
-    panel.add("<script type=\"text/javascript\" src=\"https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}\"></script>");
+    panel.add('<script type="text/javascript" src=\'https://www.google.com/jsapi?autoload={"modules":[{"name":"visualization","version":"1","packages":["corechart"]}]}\'></script>');
     
     panel.div(style="padding:50px 50px;")
     panel.div(style="padding:0px 100px;")
