@@ -148,6 +148,15 @@ def msBatchQueryCaller():
     from MsbwtPages import msBatchQuery
     return addTitleToPage(msBatchQuery.GET())
 
+@application.route('/batchQuery', methods=['POST'])
+def batchQueryCaller():
+    from MsbwtPages import batchQuery
+    datasets = str(request.form.get("datasets"))
+    jsonQueries = str(request.form.get("kmerQueries"))
+    forward = str(request.form.get("forwardEnabled"))
+    revComp = str(request.form.get("revCompEnabled"))
+    return Response(batchQuery.getBatchQueryResults(datasets, jsonQueries, forward, revComp), mimetype="application/json")
+
 @application.route('/msHelp')
 def msHelpCaller():
     from MsbwtPages import msHelp

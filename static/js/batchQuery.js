@@ -53,6 +53,11 @@ function executeBatchQuery() {
         return;
     }
     selectedDataset = selectedDatasets[0].value
+    parsedDatasets = []
+    for (i=0; i < count; i++) {
+        sd = selectedDatasets[i].value
+        parsedDatasets.push(sd);
+    }
     
     //figure out the delimiter so we can parse the input
     var validSymbols = '$ACGNT';
@@ -150,12 +155,96 @@ function executeBatchQuery() {
         var currStart = 0
         if (currStart < kmerList.length) {
             //alright, so now we send our query, here are the necessary parameters
-            querySlice(0, Math.min(querySize, kmerList.length), 1000, myQueryID)
+            //querySlice(0, Math.min(querySize, kmerList.length), 1000, myQueryID)
+            batchQuery(1000, myQueryID);
         }
     }
     
     //this scrolls for us after the button press
     $('html, body').animate({scrollTop: $('#text-console').offset().top}, 100);
+}
+
+function batchQuery(waitTime, myQueryID) {
+    updateConsole("Executing all queries...")
+    var params = {
+        "kmerQueries":JSON.stringify(kmerList),
+        "datasets":JSON.stringify(parsedDatasets),
+        "forwardEnabled":countForward,
+        "revCompEnabled":countRevComp
+    };
+    console.log(params);
+    var handler = {
+        'callback': attacher(this, function(data) {
+            if (myQueryID == currentQueryID) {
+                var parsedValues = JSON.parse(data);
+                console.log(parsedValues);
+                
+                var start = 0
+                var end = kmerList.length
+                var offset = 0
+                if (headerPresent) {
+                    offset = 1
+                }
+                var initialText = resultBox.val()
+
+                for (i=0; i < selectedDatasets.length; i++) {
+                    selectedDataset = selectedDatasets[i].value
+                    initialText += $("#"+selectedDataset).val()
+                    
+                    var currentIndex = start
+                    while (currentIndex < end) {
+                        if (countForward) {
+                            initialText += delimiter+parsedValues[selectedDataset][0][currentIndex-start]
+                        }
+                        if (countRevComp) {
+                            initialText += delimiter+parsedValues[selectedDataset][1][currentIndex-start]
+                        }
+                        currentIndex += 1
+                    }
+                    
+                    if (end >= kmerList.length) {
+                        initialText += "\n"
+                    }
+                }
+                
+                //update the output box, and then our save link
+                resultBox.val(initialText);
+                updateSaveLink();
+                updateConsole("All queries completed");
+                /*
+                if (end < kmerList.length) {
+                    //querySlice(end, Math.min(end+querySize, kmerList.length), 1000, myQueryID)
+                }
+                else {
+                    currentDatasetID++
+                    
+                    if (currentDatasetID < selectedDatasets.length) {
+                        selectedDataset = selectedDatasets[currentDatasetID].value
+                        querySlice(0, Math.min(querySize, kmerList.length), 1000, myQueryID)
+                    }
+                    else {
+                        //do nothing, we have finished the last query
+                        updateConsole("All queries completed")
+                    }
+                }
+                */
+            }
+        }),
+        'error': attacher(this, function(err) {
+            if (myQueryID == currentQueryID) {
+                console.log(err);
+                updateConsole('SERVER ERROR: '+err.toString());
+                updateConsole('Waiting '+waitTime+'ms to try again...')
+                
+                setTimeout(function() {
+                    //querySlice(start, end, 2*waitTime, myQueryID)
+                    batchQuery(2*waitTime, myQueryID)
+                }, waitTime);
+            }
+        })
+    };
+    
+    AJAX('batchQuery', handler, params);
 }
 
 function querySlice(start, end, waitTime, myQueryID) {
